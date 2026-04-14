@@ -134,13 +134,15 @@ CombatRemote.OnServerEvent:Connect(function(player, action, value)
 			print(`[Combat] {player.Name} stopped blocking`)
 		end
 
-	elseif action == "Sprint" then
-		if value == true then
-			state:SetState("Sprinting")
-			print(`[Combat] {player.Name} is sprinting`)
-		else
-			state:Reset()
-			print(`[Combat] {player.Name} stopped sprinting`)
-		end
-	end
+    elseif action == "Sprint" then
+        if value == true then
+            state:SetState("Sprinting")
+            AnimationRemote:FireClient(player, "SetSprint", true)
+            character.Humanoid.WalkSpeed = 24 -- default is 16
+        else
+            state:Reset()
+            AnimationRemote:FireClient(player, "SetSprint", false)
+            character.Humanoid.WalkSpeed = 16
+        end
+    end
 end)
